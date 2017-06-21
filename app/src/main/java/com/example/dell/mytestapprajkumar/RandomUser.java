@@ -16,18 +16,29 @@ public class RandomUser {
     private String city;
     private String state;
     private String postcode;
+    private String phone;
+
 
     //Getters and Setters
-    public RandomUser(String city, String email, String first, String last, String postcode, String state, String street, String thumbnail, String title) {
+    public RandomUser(String city, String email, String first, String last, String phone, String postcode, String state, String street, String thumbnail, String title) {
         this.city = city;
         this.email = email;
         this.first = first;
         this.last = last;
+        this.phone = phone;
         this.postcode = postcode;
         this.state = state;
         this.street = street;
         this.thumbnail = thumbnail;
         this.title = title;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getCity() {

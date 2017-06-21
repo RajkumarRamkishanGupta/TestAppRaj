@@ -5,6 +5,7 @@ package com.example.dell.mytestapprajkumar;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -47,7 +49,7 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        RandomUser superHero = superHeroes.get(position);
+        final RandomUser superHero = superHeroes.get(position);
         holder.textName.setText("Name: " + superHero.getTitle() + " " + superHero.getFirst() + " " + superHero.getLast());
         holder.textEmail.setText("Email: " + superHero.getEmail());
         Glide.with(context).load(superHero.getThumbnail()).asBitmap().placeholder(R.drawable.img_marico_logo).centerCrop().into(new BitmapImageViewTarget(holder.imgImage) {
@@ -57,6 +59,18 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Vi
                         RoundedBitmapDrawableFactory.create(context.getResources(), resource);
                 circularBitmapDrawable.setCircular(true);
                 holder.imgImage.setImageDrawable(circularBitmapDrawable);
+            }
+        });
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RandomUserDetailActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("email", superHero.getEmail());
+                intent.putExtra("pic", superHero.getThumbnail());
+                intent.putExtra("phone", superHero.getPhone());
+                intent.putExtra("name", superHero.getTitle() + " " + superHero.getFirst() + " " + superHero.getLast());
+                intent.putExtra("location", superHero.getStreet() + " " + superHero.getCity() + " " + superHero.getState() + " " + superHero.getPostcode());
+                context.startActivity(intent);
             }
         });
     }
@@ -70,13 +84,14 @@ public class RandomUserAdapter extends RecyclerView.Adapter<RandomUserAdapter.Vi
         public ImageView imgImage;
         public TextView textName;
         public TextView textEmail;
+        public LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imgImage = (ImageView) itemView.findViewById(R.id.imgImage);
             textName = (TextView) itemView.findViewById(R.id.textName);
             textEmail = (TextView) itemView.findViewById(R.id.textEmail);
-
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
         }
     }
 }

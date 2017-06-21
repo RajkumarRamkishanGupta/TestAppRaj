@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -28,11 +29,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity implements Config{
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class MainActivity extends Activity implements Config {
 
     private List<RandomUser> listSuperHeroes;
-
-    private RecyclerView recyclerView;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RandomUserAdapter adapter;
 
@@ -40,9 +43,8 @@ public class MainActivity extends Activity implements Config{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        //Initializing Views
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -107,6 +109,7 @@ public class MainActivity extends Activity implements Config{
             try {
                 JSONObject jsons = users.getJSONObject(i);
                 String email = (jsons.isNull(Email) || jsons.getString(Email).equals("")) ? "" : jsons.getString(Email);
+                String phone = (jsons.isNull(Phone) || jsons.getString(Phone).equals("")) ? "" : jsons.getString(Phone);
                 JSONObject jsonObjec = jsons.getJSONObject("name");
                 String title = (jsonObjec.isNull(Title) || jsonObjec.getString(Title).equals("")) ? "" : jsonObjec.getString(Title);
                 String first = (jsonObjec.isNull(First) || jsonObjec.getString(First).equals("")) ? "" : jsonObjec.getString(First);
@@ -118,7 +121,7 @@ public class MainActivity extends Activity implements Config{
                 String postcode = (jsonObjectLocation.isNull(Postcode) || jsonObjectLocation.getString(Postcode).equals("")) ? "" : jsonObjectLocation.getString(Postcode);
                 JSONObject jsonObjectPicture = jsons.getJSONObject("picture");
                 String thumbnail = (jsonObjectPicture.isNull(Thumbnail) || jsonObjectPicture.getString(Thumbnail).equals("")) ? "" : jsonObjectPicture.getString(Thumbnail);
-                listSuperHeroes.add(new RandomUser(city, email, first, last, postcode, state, street, thumbnail, title));
+                listSuperHeroes.add(new RandomUser(city, email, first, last, phone, postcode, state, street, thumbnail, title));
 
             } catch (JSONException e) {
                 e.printStackTrace();

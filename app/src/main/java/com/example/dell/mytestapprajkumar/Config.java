@@ -4,10 +4,10 @@ package com.example.dell.mytestapprajkumar;
  * Created by dell on 23/05/2017.
  */
 
- interface Config {
+interface Config {
     //URL of my API
     //public static final String DATA_URL = "https://randomuser.me/api?results=50";
-     String DATA_URL = "https://randomuser.me/api?results=50";
+    String DATA_URL = "https://randomuser.me/api?results=50";
     //Tags for my JSON
    /* public static final String TAG_IMAGE_URL = "image";
     public static final String TAG_NAME = "Name";
@@ -27,6 +27,7 @@ package com.example.dell.mytestapprajkumar;
     String Thumbnail = "thumbnail";
     String City = "city";
     String State = "state";
+    String Phone = "phone";
     String Postcode = "postcode";
 
 }
